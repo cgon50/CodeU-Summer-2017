@@ -25,6 +25,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import codeu.chat.common.ServerInfo;
 import codeu.chat.common.ConversationHeader;
 import codeu.chat.common.ConversationPayload;
 import codeu.chat.common.LinearUuidGenerator;
@@ -63,6 +64,8 @@ public final class Server {
 
   private final Relay relay;
   private Uuid lastSeen = Uuid.NULL;
+  private static final ServerInfo info = new ServerInfo();
+//  private static final ServerInfo info = new ServerInfo();
 
   public Server(final Uuid id, final Secret secret, final Relay relay) {
 
@@ -70,6 +73,16 @@ public final class Server {
     this.secret = secret;
     this.controller = new Controller(id, model);
     this.relay = relay;
+
+    //Server Info - A client wants to know the server info
+    this.commands.put(NetworkCode.SERVER_INFO_REQUEST, new Command() {
+      @Override
+      public void onMessage(InputStream in, OutputStream out) throws IOException {
+        Serializers.INTEGER.write(out, NetworkCode.SERVER_INFO_RESPONSE);
+        Uuid.SERIALIZER.write(out, info.version);
+      }
+    });
+
 
     // New Message - A client wants to add a new message to the back end.
     this.commands.put(NetworkCode.NEW_MESSAGE_REQUEST, new Command() {
@@ -195,6 +208,7 @@ public final class Server {
     });
   }
 
+  //handles all server requests
   public void handleConnection(final Connection connection) {
     timeline.scheduleNow(new Runnable() {
       @Override
@@ -202,10 +216,9 @@ public final class Server {
         try {
 
           LOG.info("Handling connection...");
-
+          //based off the type of the request generates some output using the commands HashMap
           final int type = Serializers.INTEGER.read(connection.in());
           final Command command = commands.get(type);
-
           if (command == null) {
             // The message type cannot be handled so return a dummy message.
             Serializers.INTEGER.write(connection.out(), NetworkCode.NO_MESSAGE);
@@ -220,7 +233,6 @@ public final class Server {
           LOG.error(ex, "Exception while handling connection.");
 
         }
-
         try {
           connection.close();
         } catch (Exception ex) {
