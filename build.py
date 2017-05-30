@@ -164,8 +164,8 @@ def main(args) :
     else :
       print 'Unknown command: [',
       for x in args :
-        print x,
-      print ']'
+        print (x)
+      print (']')
       usage();
   else :
     print ('No parameters provided.')
