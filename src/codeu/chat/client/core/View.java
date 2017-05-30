@@ -146,10 +146,13 @@ final class View implements BasicView {
         } else {
           // Communicate this error - the server did not respond with the type of
           // response we expected.
+          System.out.println("Server ran into a problem retrieving the version info");
         }
       } catch (Exception ex) {
+          System.out.println("Connection interrupted");
         // Communicate this error - something went wrong with the connection.
       }
+      System.out.println("Unknown Error");
       // If we get here it means something went wrong and null should be returned
       return null;
   }
