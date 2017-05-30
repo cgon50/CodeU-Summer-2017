@@ -65,7 +65,6 @@ public final class Server {
   private final Relay relay;
   private Uuid lastSeen = Uuid.NULL;
   private static final ServerInfo info = new ServerInfo();
-//  private static final ServerInfo info = new ServerInfo();
 
   public Server(final Uuid id, final Secret secret, final Relay relay) {
 
@@ -75,6 +74,7 @@ public final class Server {
     this.relay = relay;
 
     //Server Info - A client wants to know the server info
+    //best if given as a Command that way we are consistent with the code
     this.commands.put(NetworkCode.SERVER_INFO_REQUEST, new Command() {
       @Override
       public void onMessage(InputStream in, OutputStream out) throws IOException {
