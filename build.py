@@ -162,9 +162,9 @@ def main(args) :
         print('Run command requires a java class to run.')
         usage();
     else :
-      print 'Unknown command: [',
+      print ('Unknown command: ['),
       for x in args :
-        print (x)
+        print (x),
       print (']')
       usage();
   else :
