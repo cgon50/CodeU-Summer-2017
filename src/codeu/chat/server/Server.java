@@ -208,7 +208,6 @@ public final class Server {
     });
   }
 
-  //handles all server requests
   public void handleConnection(final Connection connection) {
     timeline.scheduleNow(new Runnable() {
       @Override
@@ -216,7 +215,7 @@ public final class Server {
         try {
 
           LOG.info("Handling connection...");
-          //based off the type of the request generates some output using the commands HashMap
+          // Based off the type of the request generates some output using the commands HashMap.
           final int type = Serializers.INTEGER.read(connection.in());
           final Command command = commands.get(type);
           if (command == null) {
