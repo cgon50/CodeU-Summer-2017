@@ -5,14 +5,22 @@ import java.io.IOException;
 
 public final class Tokenizer {
 
+  /******************************
+  The following instance variables help keep track of:
+  token - the current token we are building
+  source - the original String
+  at - our current index to get each character
+  ******************************/
   private StringBuilder token;
   private String source;
   private int at;
 
   public Tokenizer(String source) {
-
+    this.source = source;
+    token = new StringBuilder();
   }
 
+  // Method that reads in the next token for a given source
   public String next() throws IOException {
     // Skip all leading whitespace
     while (remaining() > 0 && Character.isWhitespace(peek())) {
@@ -22,13 +30,14 @@ public final class Tokenizer {
       return null;
     } else if (peek() == '"') {
       // read a token that is surrounded by quotes
-      return readWithQuotes();
+      readWithQuotes();
     } else {
       //read a token that is not surrounded by quotes
-      return readWithNoQuotes();
+      readWithNoQuotes();
     }
   }
 
+  // Read in a token that is not surrounded by quotes
   private String readWithNoQuotes() throws IOException {
     token.setLength(0); //clear the token
     while (remaining() > 0 && !Character.isWhitespace(peek())) {
@@ -37,6 +46,7 @@ public final class Tokenizer {
     return token.toString();
   }
 
+  // Read in a token that is surrounded by quotes
   private String readWithQuotes() throws IOException {
     token.setLength(0); //clear the token
     if (read() != '"') {
@@ -49,11 +59,15 @@ public final class Tokenizer {
     return token.toString();
   }
 
+// Tells us how many characters are remaining in
+// our current source
   private int remaining() {
     int result = source.length() - at;
     return result;
   }
 
+// Gives us the current character without modifying
+// the source
   private char peek() throws IOException {
     if (at < source.length()) {
       return source.charAt(at);
@@ -62,6 +76,7 @@ public final class Tokenizer {
     }
   }
 
+// Reads in one character from our source
   private char read() throws IOException {
     final char c = peek();
     at += 1;
