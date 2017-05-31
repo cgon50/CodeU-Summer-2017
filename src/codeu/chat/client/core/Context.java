@@ -40,8 +40,8 @@ public final class Context {
         null :
         new UserContext(user, view, controller);
   }
-  //Uses the instance variable view which has a getInfo method that returns a serverInfo object 
-  //based off the version of the server that the user is running.
+  // Uses the instance variable view which has a getInfo method that returns a serverInfo object 
+  // based off the version of the server that the user is running.
   public ServerInfo getInfo() {
     return this.view.getInfo();
   }
