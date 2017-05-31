@@ -136,7 +136,7 @@ final class View implements BasicView {
 
     return messages;
   }
-    //this method is used to get the serverinfo object from the server
+    //This method can run into problems if the proper response isnt provided by the server info request.
     public ServerInfo getInfo() {
       try (final Connection connection = this.source.connect()) {
         Serializers.INTEGER.write(connection.out(), NetworkCode.SERVER_INFO_REQUEST);
@@ -149,11 +149,11 @@ final class View implements BasicView {
           System.out.println("Server ran into a problem retrieving the version info");
         }
       } catch (Exception ex) {
-          System.out.println("Connection interrupted");
         // Communicate this error - something went wrong with the connection.
+         System.out.println("Connection interrupted");
       }
-      System.out.println("Unknown Error");
       // If we get here it means something went wrong and null should be returned
+      System.out.println("Unknown Error");
       return null;
   }
 }
