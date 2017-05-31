@@ -101,8 +101,8 @@ public final class Chat {
           System.out.println("Error server sent bad info!! :( ");
       } else {
         // Print the server info to the user in a pretty way
-        //since I added a toString method to the serverInfo oobject this should
-        //display nicely
+        // since I added a toString method to the serverInfo object this should
+        // display nicely.
         System.out.println(info);
       }
     }
