@@ -31,7 +31,8 @@ import codeu.chat.util.Uuid;
 //   have no effect on the server's state.
 
 public interface BasicView {
-
+  
+  // Returns an object that should contain the version of the server that is being ran by the user.
   ServerInfo getInfo();
   // GET USERS
   //
@@ -52,6 +53,5 @@ public interface BasicView {
   //
   //   Return all messages whose id is found in the given collection.
   Collection<Message> getMessages(Collection<Uuid> ids);
-
 
 }
