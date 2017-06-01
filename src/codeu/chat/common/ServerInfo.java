@@ -8,21 +8,21 @@ public final class ServerInfo {
 
   public final Uuid version;
 
-  //sets the server version to either null or
+  // Sets the server version to either null or the current server version.
   public ServerInfo() {
     Uuid temp = null;
     try{
       temp =  Uuid.parse(SERVER_VERSION);
     } catch(IOException e){
-      System.out.println("Server could not parse the user id");
+      System.out.println("Server could not parse the server version.");
     }
     version = temp;
   }
-  //a second constuctor to assign your own version
+  // A second constuctor to assign your own version number.
   public ServerInfo(Uuid version) {
       this.version = version;
   }
-  //displays the server info in a 'pretty' way
+  // Displays the server info in a 'pretty' way.
   public String toString(){
     return "The Current Server Version is: "+ SERVER_VERSION;
   }
