@@ -46,6 +46,8 @@ public final class Server {
     void onMessage(InputStream in, OutputStream out) throws IOException;
   }
 
+  private static final ServerInfo info = new ServerInfo();
+// Server holds our new ServerInfo object, which is used to retrieve the server duration
   private static final Logger.Log LOG = Logger.newLog(Server.class);
 
   private static final int RELAY_REFRESH_MS = 5000;  // 5 seconds
@@ -169,6 +171,16 @@ public final class Server {
 
         Serializers.INTEGER.write(out, NetworkCode.GET_MESSAGES_BY_ID_RESPONSE);
         Serializers.collection(Message.SERIALIZER).write(out, messages);
+      }
+    });
+    /* Request Server Start Time - A client wants to know how long the server
+       has been running for. 
+    */
+    this.commands.put(NetworkCode.SERVER_INFO_REQUEST, new Command() {
+      @Override
+      public void onMessage(InputStream in, OutputStream out) throws IOException {
+        Serializers.INTEGER.write(out, NetworkCode.SERVER_INFO_RESPONSE);
+        Uuid.SERIALIZER.write(out, info.version);
       }
     });
 
