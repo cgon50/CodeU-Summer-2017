@@ -4,12 +4,11 @@ import java.io.IOException;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
-/********************
- Utility class that allows us to test our new Tokenizer class
-********************/
+// This is a public class created in util that helps with testing our Tokenizer class.
 public final class TokenizerTest {
 
-  // Test if the Tokenizer can read tokens surrounded by quotes
+  // These tests help us determine if our Tokenizer class can read in tokens
+  // that are surrounded by quotes.
   @Test
   public void testWithQuotes() throws IOException {
     final Tokenizer tokenizer = new Tokenizer("\"hello world\" \"how are you\"");
@@ -18,7 +17,8 @@ public final class TokenizerTest {
     assertEquals(tokenizer.next(), null);
   }
 
-  // Test if the Tokenizer can read tokens not surrounded by quotes
+  // These tests help us determine if our Tokenizer class can read in tokens
+  // that are not surrounded by quotes.
   @Test
   public void testWithNoQuotes() throws IOException {
     final Tokenizer tokenizer = new Tokenizer("hello world how are you");
