@@ -32,10 +32,10 @@ public final class Tokenizer {
       return null;
     } else if (peek() == '"') {
       // Read a token that is surrounded by quotes
-      readWithQuotes();
+      return readWithQuotes();
     } else {
       // Read a token that is not surrounded by quotes
-      readWithNoQuotes();
+      return readWithNoQuotes();
     }
   }
 
