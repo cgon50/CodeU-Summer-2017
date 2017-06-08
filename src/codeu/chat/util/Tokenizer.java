@@ -48,7 +48,8 @@ public final class Tokenizer {
     return token.toString();
   }
 
-  // This helper method reads in a token that is surrounded by quotes.
+  // This helper method reads in a token that is surrounded by quotes, which
+  // will allow for multi-token commands, i.e. a phrase.
   private String readWithQuotes() throws IOException {
     token.setLength(0); //clear the token
     if (read() != '"') {
@@ -74,7 +75,7 @@ public final class Tokenizer {
     if (at < source.length()) {
       return source.charAt(at);
     } else {
-      throw new IOException();
+      throw new IOException("No more characters in source.");
     }
   }
 
