@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Stack;
-
+import codeu.chat.common.ServerInfo;
 import codeu.chat.client.core.Context;
 import codeu.chat.client.core.ConversationContext;
 import codeu.chat.client.core.MessageContext;
@@ -91,6 +91,22 @@ public final class Chat {
   private Panel createRootPanel(final Context context) {
 
     final Panel panel = new Panel();
+    panel.register("info", new Panel.Command() {
+  @Override
+    public void invoke(Scanner args) {
+      final ServerInfo info = context.getInfo();
+        if (info == null) {
+          // Communicate error to user - the server did not send us a valid
+          // info object.
+          System.out.println("Error server sent bad info!! :( ");
+      } else {
+        // Print the server info to the user in a pretty way
+        // since I added a toString method to the serverInfo object this should
+        // display nicely.
+        System.out.println(info);
+      }
+    }
+  });
 
     // HELP
     //
@@ -107,6 +123,8 @@ public final class Chat {
         System.out.println("    Add a new user with the given name.");
         System.out.println("  u-sign-in <name>");
         System.out.println("    Sign in as the user with the given name.");
+        System.out.println("  info");
+        System.out.println("    Displays the info about the current server version.");
         System.out.println("  exit");
         System.out.println("    Exit the program.");
       }

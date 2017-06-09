@@ -15,7 +15,7 @@
 package codeu.chat.common;
 
 import java.util.Collection;
-
+import codeu.chat.common.ServerInfo;
 import codeu.chat.common.ConversationHeader;
 import codeu.chat.common.ConversationPayload;
 import codeu.chat.common.Message;
@@ -31,7 +31,9 @@ import codeu.chat.util.Uuid;
 //   have no effect on the server's state.
 
 public interface BasicView {
-
+  
+  // Returns an object that should contain the version of the server that is being ran by the user.
+  ServerInfo getInfo();
   // GET USERS
   //
   //   Return all users whose id is found in the given collection.

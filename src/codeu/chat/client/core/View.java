@@ -16,7 +16,7 @@ package codeu.chat.client.core;
 
 import java.util.ArrayList;
 import java.util.Collection;
-
+import codeu.chat.common.ServerInfo;
 import codeu.chat.common.BasicView;
 import codeu.chat.common.ConversationHeader;
 import codeu.chat.common.ConversationPayload;
@@ -135,5 +135,25 @@ final class View implements BasicView {
     }
 
     return messages;
+  }
+    //This method can run into problems if the proper response isnt provided by the server info request.
+    public ServerInfo getInfo() {
+      try (final Connection connection = this.source.connect()) {
+        Serializers.INTEGER.write(connection.out(), NetworkCode.SERVER_INFO_REQUEST);
+        if (Serializers.INTEGER.read(connection.in()) == NetworkCode.SERVER_INFO_RESPONSE) {
+          final Uuid version = Uuid.SERIALIZER.read(connection.in());
+          return new ServerInfo(version);
+        } else {
+          // Communicate this error - the server did not respond with the type of
+          // response we expected.
+          System.out.println("Server ran into a problem retrieving the version info");
+        }
+      } catch (Exception ex) {
+        // Communicate this error - something went wrong with the connection.
+         System.out.println("Connection interrupted");
+      }
+      // If we get here it means something went wrong and null should be returned
+      System.out.println("Unknown Error");
+      return null;
   }
 }
