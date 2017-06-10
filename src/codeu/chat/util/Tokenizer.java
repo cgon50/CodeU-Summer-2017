@@ -8,12 +8,13 @@ import java.io.IOException;
 // application later on.
 public final class Tokenizer {
 
-  // The following instance variables help keep track of the current token
-  // we are building (token), the original input (source), and the current
-  // index we are at in our source (at).
+  // The following instance variables help keep track of:
+  // the current token we are building,
   private StringBuilder token;
+  // the original input,
   private String source;
-  private int at;
+  // and the current index we are at in our source.
+  private int currentSourceIndex;
 
   // The constructor for a new Tokenizer object assigns the given input to our
   // source and creates a new StringBuilder for our token.
@@ -65,15 +66,14 @@ public final class Tokenizer {
 // This method tells us how many characters we have remaining
 // in our source.
   private int remaining() {
-    int result = source.length() - at;
-    return result;
+    return source.length() - currentSourceIndex;
   }
 
 // This method gives us the next character without modifying
 // the source or our token.
   private char peek() throws IOException {
-    if (at < source.length()) {
-      return source.charAt(at);
+    if (currentSourceIndex < source.length()) {
+      return source.charAt(currentSourceIndex);
     } else {
       throw new IOException("No more characters in source.");
     }
@@ -83,7 +83,7 @@ public final class Tokenizer {
 // our current index.
   private char read() throws IOException {
     final char c = peek();
-    at += 1;
+    currentSourceIndex += 1;
     return c;
   }
 
