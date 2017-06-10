@@ -17,7 +17,8 @@ package codeu.chat.client.core;
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Collection;
-
+import codeu.chat.common.ServerInfo;
+import codeu.chat.client.core.View;
 import codeu.chat.common.BasicView;
 import codeu.chat.common.User;
 import codeu.chat.util.Uuid;
@@ -39,7 +40,11 @@ public final class Context {
         null :
         new UserContext(user, view, controller);
   }
-
+  // Uses the instance variable view which has a getInfo method that returns a serverInfo object 
+  // based off the version of the server that the user is running.
+  public ServerInfo getInfo() {
+    return this.view.getInfo();
+  }
   public Iterable<UserContext> allUsers() {
     final Collection<UserContext> users = new ArrayList<>();
     for (final User user : view.getUsers()) {
