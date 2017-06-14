@@ -59,7 +59,7 @@ public final class Chat {
         args.add(token);
       }
     } catch (IOException e) {
-      System.out.println("ERROR: Error parsing args string. " + e);
+      throw new IOException("ERROR: Error parsing string in args.");
     }
     final String command = args.remove(0);
 
