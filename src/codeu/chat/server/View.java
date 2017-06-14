@@ -45,12 +45,21 @@ public final class View implements BasicView, SinglesView {
 
   private final Model model;
 
+  private static final ServerInfo info = new ServerInfo();
+
   public View(Model model) {
     this.model = model;
   }
-  
+
   // This is implemented to avoid lots of checks with BasicView objects that should be views
   // If the BasicView object is not an instance of a view then it should throw a UnsupportedOperationException.
+
+  @Override
+  public ServerInfo getInfo() { /* Accesses ServerInfo, specifically
+    it returns 'startTime' */
+    return info;
+  }
+
   public ServerInfo getInfo(){
     throws new UnsupportedOperationException("A view that is a BasicView but not a view object cannot use getInfo in this version.");
   }

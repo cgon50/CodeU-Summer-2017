@@ -40,11 +40,17 @@ public final class Context {
         null :
         new UserContext(user, view, controller);
   }
-  // Uses the instance variable view which has a getInfo method that returns a serverInfo object 
+  // Uses the instance variable view which has a getInfo method that returns a serverInfo object
   // based off the version of the server that the user is running.
+
   public ServerInfo getInfo() {
     return this.view.getInfo();
   }
+
+  public Info getInfo() {
+    return view.getInfo();
+  }
+
   public Iterable<UserContext> allUsers() {
     final Collection<UserContext> users = new ArrayList<>();
     for (final User user : view.getUsers()) {
