@@ -55,8 +55,8 @@ public final class View implements BasicView, SinglesView {
   // If the BasicView object is not an instance of a view then it should throw a UnsupportedOperationException.
 
   @Override
-  public ServerInfo getInfo() { /* Accesses ServerInfo, specifically
-    it returns 'startTime' */
+  public ServerInfo getInfo() {
+    //Accesses ServerInfo, better method for a server info object
     return info;
   }
 

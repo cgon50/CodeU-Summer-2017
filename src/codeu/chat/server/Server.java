@@ -80,15 +80,8 @@ public final class Server {
       public void onMessage(InputStream in, OutputStream out) throws IOException {
         Serializers.INTEGER.write(out, NetworkCode.SERVER_INFO_RESPONSE);
         Uuid.SERIALIZER.write(out, info.version);
-      }
-    });
-
-    /*The purpose of this command is to pass the 'startTime' to the
-    client, when requested by him/her. */
-    this.commands.put(NetworkCode.SERVER_INFO_REQUEST, new Command() {
-      @Override
-      public void onMessage(InputStream in, OutputStream out) throws IOException {
-        Serializers.INTEGER.write(out, NetworkCode.SERVER_INFO_RESPONSE);
+        /*The purpose of this command is to pass the 'startTime' to the
+        client, when requested by him/her. */
         Time.SERIALIZER.write(out, view.getInfo().startTime);
       }
     });

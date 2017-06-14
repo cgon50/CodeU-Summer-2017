@@ -14,8 +14,8 @@ public final class ServerInfo {
   // Sets the server version to either null or the current server version.
   public ServerInfo() {
     Uuid temp = null;
-    this.startTime = Time.now(); /*Sets our variable 'startTime' to the
-    current time*/
+    //Sets our variable 'startTime' to the current time
+    this.startTime = Time.now();
     try{
       temp =  Uuid.parse(SERVER_VERSION);
     } catch(IOException e){
@@ -26,13 +26,11 @@ public final class ServerInfo {
   // A second constuctor to assign your own version number.
   public ServerInfo(Uuid version) {
       this.version = version;
+      //Sets the current time, 'Time.now()' to 'startTime'
+      this.startTime = startTime;
   }
   // Displays the server info in a 'pretty' way.
   public String toString(){
     return "The Current Server Version is: "+ SERVER_VERSION;
-  }
-  public ServerInfo(Time startTime) {
-    this.startTime = startTime; /*Sets the current time, 'Time.now()' to
-    'startTime'*/
   }
 }
