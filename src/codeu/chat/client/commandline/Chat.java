@@ -59,7 +59,7 @@ public final class Chat {
         args.add(token);
       }
     } catch (IOException e) {
-      System.out.println("ERROR: Nothing found in args, IOException thrown. " + e);
+      System.out.println("ERROR: Error parsing args string. " + e);
     }
     final String command = args.remove(0);
 
