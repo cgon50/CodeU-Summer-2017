@@ -61,7 +61,7 @@ public final class View implements BasicView, SinglesView {
   }
 
   public ServerInfo getInfo(){
-    throws new UnsupportedOperationException("A view that is a BasicView but not a view object cannot use getInfo in this version.");
+    throw new UnsupportedOperationException("A view that is a BasicView but not a view object cannot use getInfo in this version.");
   }
   @Override
   public Collection<User> getUsers() {
