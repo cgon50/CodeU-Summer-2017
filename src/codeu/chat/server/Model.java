@@ -25,6 +25,9 @@ import codeu.chat.util.Time;
 import codeu.chat.util.Uuid;
 import codeu.chat.util.store.Store;
 import codeu.chat.util.store.StoreAccessor;
+import codeu.chat.server.Transaction;
+import java.util.Queue;
+import java.util.LinkedList;
 
 public final class Model {
 
@@ -52,6 +55,9 @@ public final class Model {
   };
 
   private static final Comparator<String> STRING_COMPARE = String.CASE_INSENSITIVE_ORDER;
+
+  private int collectiveSize = 0;
+  private Queue<Transaction> transactionLog = new LinkedList<>();
 
   private final Store<Uuid, User> userById = new Store<>(UUID_COMPARE);
   private final Store<Time, User> userByTime = new Store<>(TIME_COMPARE);
