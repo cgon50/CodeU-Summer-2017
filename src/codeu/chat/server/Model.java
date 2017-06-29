@@ -77,6 +77,10 @@ public final class Model {
     userById.insert(user.id, user);
     userByTime.insert(user.creation, user);
     userByText.insert(user.name, user);
+    // add a new transaction to our queue to indicate the creation of a new user in our application
+    Transaction userTransaction = new Transaction(user);
+    transactionLog.add(userTransaction);
+    collectiveSize++;
   }
 
   public StoreAccessor<Uuid, User> userById() {
@@ -95,7 +99,11 @@ public final class Model {
     conversationById.insert(conversation.id, conversation);
     conversationByTime.insert(conversation.creation, conversation);
     conversationByText.insert(conversation.title, conversation);
+    // add a new transaction to our queue to indicate the creation of a new conversation
     conversationPayloadById.insert(conversation.id, new ConversationPayload(conversation.id));
+    Transaction conversationTransaction = new Transaction(conversation);
+    transactionLog.add(conversationTransaction);
+    collectiveSize++;
   }
 
   public StoreAccessor<Uuid, ConversationHeader> conversationById() {
@@ -118,6 +126,10 @@ public final class Model {
     messageById.insert(message.id, message);
     messageByTime.insert(message.creation, message);
     messageByText.insert(message.content, message);
+    // add a new transaction to our queue to indicate the creation of a new message in our application
+    Transaction messageTransaction = new Transaction(message);
+    transactionLog.add(messageTransaction);
+    collectiveSize++;
   }
 
   public StoreAccessor<Uuid, Message> messageById() {
