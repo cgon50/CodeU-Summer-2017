@@ -25,7 +25,7 @@ import codeu.chat.util.Uuid;
 
 import codeu.chat.server.Transaction;
 
-public final class ConversationHeader {
+public final class ConversationHeader implements Transaction<ConversationHeader> {
 
   public static final Serializer<ConversationHeader> SERIALIZER = new Serializer<ConversationHeader>() {
 
@@ -65,4 +65,10 @@ public final class ConversationHeader {
     this.title = title;
 
   }
+
+  public String transaction() {
+    return "";
+  }
+
+
 }

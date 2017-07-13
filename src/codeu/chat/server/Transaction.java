@@ -1,11 +1,9 @@
+
 package codeu.chat.server;
 
 
-public interface Transaction {
+public interface Transaction<T> {
 
   String transaction();
-
-  T parse(String input);
-
 
 }

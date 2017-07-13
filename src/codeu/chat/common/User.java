@@ -25,7 +25,7 @@ import codeu.chat.util.Uuid;
 
 import codeu.chat.server.Transaction;
 
-public final class User {
+public final class User implements Transaction<User> {
 
   public static final Serializer<User> SERIALIZER = new Serializer<User>() {
 
@@ -61,4 +61,10 @@ public final class User {
     this.creation = creation;
 
   }
+
+  public String transaction() {
+    return "";
+  }
+  
+
 }
