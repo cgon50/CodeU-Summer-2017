@@ -75,7 +75,17 @@ public final class Message implements Transaction<Message> {
   }
 
   public String transaction() {
-    return "";
+    StringBuilder sb = new StringBuilder();
+    sb.append("ADD-MESSAGE ");
+    sb.append(this.id);
+    sb.append(" ");
+    sb.append(this.creation);
+    sb.append(" ");
+    sb.append(this.author);
+    sb.append(" \"");
+    sb.append(this.content);
+    sb.append("\"");
+    return sb.toString();
   }
 
 

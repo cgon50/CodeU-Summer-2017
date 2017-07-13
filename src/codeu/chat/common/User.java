@@ -63,8 +63,15 @@ public final class User implements Transaction<User> {
   }
 
   public String transaction() {
-    return "";
+    StringBuilder sb = new StringBuilder();
+    sb.append("ADD-USER ");
+    sb.append(this.id);
+    sb.append(" \"");
+    sb.append(this.name);
+    sb.append("\" ");
+    sb.append(this.creation);
+    return sb.toString();
   }
-  
+
 
 }

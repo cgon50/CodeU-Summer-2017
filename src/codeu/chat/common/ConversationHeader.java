@@ -67,7 +67,16 @@ public final class ConversationHeader implements Transaction<ConversationHeader>
   }
 
   public String transaction() {
-    return "";
+    StringBuilder sb = new StringBuilder();
+    sb.append("ADD-CONVERSATION ");
+    sb.append(this.id);
+    sb.append(" \"");
+    sb.append(this.title);
+    sb.append("\" ");
+    sb.append(this.creation);
+    sb.append(" ");
+    sb.append(this.owner);
+    return sb.toString();
   }
 
 
