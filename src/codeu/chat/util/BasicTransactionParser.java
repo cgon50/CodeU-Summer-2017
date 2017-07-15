@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class BasicTransactionParser {
 
-  String type = null;
+  private String type = null;
 
   public TransactionObject initParse(String input) throws IOException {
     Scanner in = new Scanner(input);
