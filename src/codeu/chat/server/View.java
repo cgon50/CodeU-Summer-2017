@@ -54,10 +54,12 @@ public final class View implements BasicView, SinglesView {
   // This is implemented to avoid lots of checks with BasicView objects that should be views
   // If the BasicView object is not an instance of a view then it should throw a UnsupportedOperationException.
 
+
   @Override
   public ServerInfo getInfo() {
     //Accesses ServerInfo, better method for a server info object
     return info;
+
   }
 
   @Override
