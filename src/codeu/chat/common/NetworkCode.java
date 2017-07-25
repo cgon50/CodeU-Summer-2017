@@ -40,5 +40,4 @@ public final class NetworkCode {
       SERVER_INFO_REQUEST = 31,
       SERVER_INFO_RESPONSE = 32;
 
-
 }
