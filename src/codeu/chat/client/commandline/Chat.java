@@ -315,11 +315,11 @@ public final class Chat {
         System.out.println("User Info:");
         System.out.format("  Name : %s\n", user.user.name);
         System.out.format("  Id   : UUID:%s\n", user.user.id);
-      final ServerInfo info = context.getInfo();
+        final ServerInfo info = context.getInfo();
 
         if (info == null) {
-          // Communicate error to user - the server did not send us a valid
-                  // info object.
+          /* Communicate error to user - the server did not send us a valid
+           info object.*/
          System.out.println("Invalid Server Info Object");
         } else {
           // Print the server info to the user in a pretty way

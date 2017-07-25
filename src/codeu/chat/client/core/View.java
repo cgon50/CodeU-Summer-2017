@@ -60,27 +60,30 @@ final class View implements BasicView {
         LOG.error("Response from server failed.");
       }
 
-    } catch (Exception ex) {
-      System.out.println("ERROR: Exception during call on server. Check log for details.");
-      LOG.error(ex, "Exception during call on server.");
-    }
+      }
+  catch (Exception ex) {
+    System.out.println("ERROR: Exception during call on server. Check log for details.");
+    LOG.error(ex, "Exception during call on server.");
+  }
 
     return users;
   }
 
   public ServerInfo getInfo() {
-  try (final Connection connection = source.connection()) {
-    Serializers.INTEGER.write(connection.out(), NetworkCode.SERVER_INFO_REQUEST);
-    if (Serializers.INTEGER.read(connection.in()) == NetworkCode.SERVER_INFO_RESPONSE) {
-      final Time startTime = Time.SERIALIZER.read(connection.in());
-      return new ServerInfo(startTime);
-    } else {
-      // Communicate this error - the server did not respond with the type of
-      // response we expected.
+    try (final Connection connection = source.connection()) {
+      Serializers.INTEGER.write(connection.out(), NetworkCode.SERVER_INFO_REQUEST);
+        if (Serializers.INTEGER.read(connection.in()) == NetworkCode.SERVER_INFO_RESPONSE) {
+          final Time startTime = Time.SERIALIZER.read(connection.in());
+          return new ServerInfo(startTime);
+        }
+        else {
+          System.out.println("Server did not respond with the type of response we expected");
+        }
     }
-  } catch (Exception ex) {
+    catch (Exception ex) {
     // Communicate this error - something went wrong with the connection.
-  }
+      System.out.print(ex);
+    }
   // If we get here it means something went wrong and null should be returned
   return null;
 }

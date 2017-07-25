@@ -60,9 +60,6 @@ public final class View implements BasicView, SinglesView {
     return info;
   }
 
-  public ServerInfo getInfo(){
-    throw new UnsupportedOperationException("A view that is a BasicView but not a view object cannot use getInfo in this version.");
-  }
   @Override
   public Collection<User> getUsers() {
     return all(model.userById());
