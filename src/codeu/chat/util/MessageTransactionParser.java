@@ -12,6 +12,8 @@ public class MessageTransactionParser {
   String uuid;
   long time;
   String authorUuid;
+  String nextUuid;
+  String prevUuid;
   StringBuilder messageBuilder;
 
   public Message parser(String input) throws IOException {
@@ -24,6 +26,13 @@ public class MessageTransactionParser {
       throw new IOException("Error: cannot read in a Uuid for this Message.");
     }
 
+    if (in.hasNext()) {
+      authorUuid = in.next();
+    }
+    else {
+      throw new IOException("Error: cannot read in a Uuid for the author of this message.");
+    }
+
     if (in.hasNextLong()) {
       time = in.nextLong();
     }
@@ -32,10 +41,17 @@ public class MessageTransactionParser {
     }
 
     if (in.hasNext()) {
-      authorUuid = in.next();
+      nextUuid = in.next();
     }
     else {
-      throw new IOException("Error: cannot read in a Uuid for the author of this message.");
+      throw new IOException("Error: cannot read in a Uuid for the next message.");
+    }
+
+    if (in.hasNext()) {
+      prevUuid = in.next();
+    }
+    else {
+      throw new IOException("Error: cannot read in a Uuid for the previous message.");
     }
 
     messageBuilder = new StringBuilder();
@@ -48,7 +64,9 @@ public class MessageTransactionParser {
     Uuid message = Uuid.parse(uuid);
     Time creation = Time.fromMs(time);
     Uuid author = Uuid.parse(authorUuid);
-    return new Message(message, null, null, creation, author, content);
+    Uuid prev = Uuid.parse(prevUuid);
+    Uuid next = Uuid.parse(nextUuid);
+    return new Message(message, next, prev, creation, author, content);
   }
 
 }

@@ -79,9 +79,13 @@ public final class Message implements Transaction<Message> {
     sb.append("ADD-MESSAGE ");
     sb.append(this.id);
     sb.append(" ");
+    sb.append(this.author);
+    sb.append(" ");
     sb.append(this.creation);
     sb.append(" ");
-    sb.append(this.author);
+    sb.append(this.next);
+    sb.append(" ");
+    sb.append(this.prev);
     sb.append(" \"");
     sb.append(this.content);
     sb.append("\"");
