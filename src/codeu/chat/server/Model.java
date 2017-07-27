@@ -26,6 +26,11 @@ import codeu.chat.util.Uuid;
 import codeu.chat.util.store.Store;
 import codeu.chat.util.store.StoreAccessor;
 
+import java.nio.file;
+import java.io.file;
+import java.util.Queue;
+import codeu.chat.server.Transaction;
+
 public final class Model {
 
   private static final Comparator<Uuid> UUID_COMPARE = new Comparator<Uuid>() {
@@ -67,10 +72,17 @@ public final class Model {
   private final Store<Time, Message> messageByTime = new Store<>(TIME_COMPARE);
   private final Store<String, Message> messageByText = new Store<>(STRING_COMPARE);
 
+  private Queue<Transaction> transactions = new ArrayList<Transaction>();
+
+  public Queue<Transaction> getTransactions() {
+    return transactions;
+  }
+
   public void add(User user) {
     userById.insert(user.id, user);
     userByTime.insert(user.creation, user);
     userByText.insert(user.name, user);
+    transactions.add(user);
   }
 
   public StoreAccessor<Uuid, User> userById() {
@@ -90,6 +102,7 @@ public final class Model {
     conversationByTime.insert(conversation.creation, conversation);
     conversationByText.insert(conversation.title, conversation);
     conversationPayloadById.insert(conversation.id, new ConversationPayload(conversation.id));
+    transactions.add(conversation);
   }
 
   public StoreAccessor<Uuid, ConversationHeader> conversationById() {
@@ -112,6 +125,7 @@ public final class Model {
     messageById.insert(message.id, message);
     messageByTime.insert(message.creation, message);
     messageByText.insert(message.content, message);
+    transactions.add(message);
   }
 
   public StoreAccessor<Uuid, Message> messageById() {
