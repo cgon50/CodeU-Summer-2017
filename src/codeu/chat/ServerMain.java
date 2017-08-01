@@ -89,7 +89,9 @@ final class ServerMain {
           String currLine = input.nextLine();
           BasicTransactionParser btp = new BasicTransactionParser();
           TransactionObject type = btp.initParse(currLine);
-          if(type == TransactionObject.USER){
+          if(type == TransactionObject.FLUSHED){
+            
+          }else if(type == TransactionObject.USER){
             UserTransactionParser utp = new UserTransactionParser();
             User u = utp.parse(currLine);
           }else if (type == TransactionObject.MESSAGE){

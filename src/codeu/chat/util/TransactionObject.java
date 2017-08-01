@@ -2,6 +2,6 @@ package codeu.chat.util;
 
 public enum TransactionObject {
 
-  USER, MESSAGE, CONVERSATION
+  USER, MESSAGE, CONVERSATION, FLUSHED
 
 }
