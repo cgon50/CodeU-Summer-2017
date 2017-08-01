@@ -78,6 +78,33 @@ final class ServerMain {
 
       LOG.info("Starting server...");
       runServer(id, secret, serverSource, relaySource);
+      //Now that we have the server running we can begin to recreate messages/chats
+      Scanner
+      //this code gets the file path and connects it to a reader
+      URL path = Model.class.getResource("Chat_History");
+      if(path != null) {
+        File f = new File(path.getFile());
+        Scanner input = new Scanner(f);
+        while(input.hasNextLine()) { 
+          String currLine = input.nextLine();
+          BasicTransactionParser btp = new BasicTransactionParser();
+          TransactionObject type = btp.initParse(currLine);
+          if(type == TransactionObject.USER){
+            UserTransactionParser utp = new UserTransactionParser();
+            User u = utp.parse(currLine);
+          }else if (type == TransactionObject.MESSAGE){
+            MessageTransactionParser mtp = new MessageTransactionParser();
+            Message m = mtp.parse(currLine);
+          } else if (type == TransactionObject.CONVERSATION){
+            ConversationTransactionParser ctp = new ConversationTransactionParser();
+            ConversationHeader c = ctp.parse(currLine);
+          }else {
+            throw new IllegalStateException("Oh No!, I was passed in the wrong type, try again...");
+          }
+        }
+      }
+      
+
 
     } catch (IOException ex) {
 
