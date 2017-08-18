@@ -26,6 +26,11 @@ import codeu.chat.util.Uuid;
 import codeu.chat.util.store.Store;
 import codeu.chat.util.store.StoreAccessor;
 
+import java.nio.file;
+import java.io.file;
+import java.util.Queue;
+import codeu.chat.server.Transaction;
+
 public final class Model {
 
   private static final Comparator<Uuid> UUID_COMPARE = new Comparator<Uuid>() {
@@ -52,7 +57,7 @@ public final class Model {
   };
 
   private static final Comparator<String> STRING_COMPARE = String.CASE_INSENSITIVE_ORDER;
-
+  private final int transLimit = 20;
   private final Store<Uuid, User> userById = new Store<>(UUID_COMPARE);
   private final Store<Time, User> userByTime = new Store<>(TIME_COMPARE);
   private final Store<String, User> userByText = new Store<>(STRING_COMPARE);
@@ -67,10 +72,35 @@ public final class Model {
   private final Store<Time, Message> messageByTime = new Store<>(TIME_COMPARE);
   private final Store<String, Message> messageByText = new Store<>(STRING_COMPARE);
 
+  private Queue<Transaction> transactions = new ArrayList<Transaction>();
+
+  public Queue<Transaction> getTransactions() {
+    return transactions;
+  }
+  //checks if we need to write all the transactions to the log based off the amount of new transactions
+  private void flush() {
+    if(transactions.size() >= transLimit) {
+      ArrayList<String> transactionStrings = transStrings();
+      Path file = Paths.get("Chat_History");
+      Files.write(file, transactionStrings, Charset.forName("UTF-8"));
+    }
+
+  }
+  //clears the transaction objects from the queue and creates an arrayList of all the strings
+  private ArrayList<String> transStrings() {
+    ArrayList<String> transactionStrings = new ArrayList<>();
+    for(int i = 0; i < transactions.size(); i++) {
+      String currentString = transactions.remove().toString();
+      transactionStrings.add(currentString);
+    }
+
+  }
   public void add(User user) {
     userById.insert(user.id, user);
     userByTime.insert(user.creation, user);
     userByText.insert(user.name, user);
+    transactions.add(user);
+    flush();
   }
 
   public StoreAccessor<Uuid, User> userById() {
@@ -90,6 +120,8 @@ public final class Model {
     conversationByTime.insert(conversation.creation, conversation);
     conversationByText.insert(conversation.title, conversation);
     conversationPayloadById.insert(conversation.id, new ConversationPayload(conversation.id));
+    transactions.add(conversation);
+    flush();
   }
 
   public StoreAccessor<Uuid, ConversationHeader> conversationById() {
@@ -112,6 +144,8 @@ public final class Model {
     messageById.insert(message.id, message);
     messageByTime.insert(message.creation, message);
     messageByText.insert(message.content, message);
+    transactions.add(message);
+    flush();
   }
 
   public StoreAccessor<Uuid, Message> messageById() {

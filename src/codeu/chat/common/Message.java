@@ -23,7 +23,9 @@ import codeu.chat.util.Serializers;
 import codeu.chat.util.Time;
 import codeu.chat.util.Uuid;
 
-public final class Message {
+import codeu.chat.server.Transaction;
+
+public final class Message implements Transaction<Message> {
 
   public static final Serializer<Message> SERIALIZER = new Serializer<Message>() {
 
@@ -71,4 +73,24 @@ public final class Message {
     this.content = content;
 
   }
+
+  public String transaction() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("ADD-MESSAGE ");
+    sb.append(this.id);
+    sb.append(" ");
+    sb.append(this.author);
+    sb.append(" ");
+    sb.append(this.creation);
+    sb.append(" ");
+    sb.append(this.next);
+    sb.append(" ");
+    sb.append(this.prev);
+    sb.append(" \"");
+    sb.append(this.content);
+    sb.append("\"");
+    return sb.toString();
+  }
+
+
 }
